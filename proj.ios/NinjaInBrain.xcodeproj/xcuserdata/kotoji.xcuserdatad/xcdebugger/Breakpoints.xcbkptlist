@@ -8,13 +8,48 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393609921.258895"
+         timestampString = "393690121.737584"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
-         landmarkName = "GameScene::update(float dt)"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
+         landmarkName = "GameScene::createInitialPlates()"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../Classes/GameScene.cpp"
+         timestampString = "393690121.737584"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
+         landmarkName = "GameScene::createInitialPlates()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../Classes/PlayerSprite.h"
+         timestampString = "393683895.429952"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "22"
+         endingLineNumber = "22">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../Classes/GameScene.cpp"
+         timestampString = "393690121.737584"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "77"
+         endingLineNumber = "77">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

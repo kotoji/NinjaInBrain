@@ -13,12 +13,26 @@
 
 class PlayerSprite : public cocos2d::CCSprite {
 public:
+    enum PlayerState {
+        StateJump,
+        StateRun,
+    };
+    
     PlayerSprite();
     virtual ~PlayerSprite();
     
-    virtual bool init();
-    static PlayerSprite* create();
+    virtual bool init(cocos2d::CCSize backgroundSize);
+    static PlayerSprite* create(cocos2d::CCSize backgrondSize);
     void update(float dt);
+    void touched();
+    
+    CC_SYNTHESIZE(PlayerState, mState, PlayerState);
+    
+protected:
+    cocos2d::CCSize mBackgroundSize;
+    float gravity;
+    bool jumping;
+    float speedY;
 };
 
 #endif /* defined(__NinjaInBrain__Player__) */
