@@ -54,8 +54,15 @@ void PlayerSprite::update(float dt) {
         speedY -= gravity;
     } else if (mState == StateRun) {
         speedY = 0;
+    } else if (mState == StateFall) {
+        setPosition(ccp(pos.x, pos.y + speedY));
+        if (speedY != 0) {
+            speedY -= gravity;
+        } // プレートの上でガタガタしてしまうのを防止(アニメーション付ける場合ガタガタしていた方がいいのかもしれんが)
+        else {
+            speedY -= gravity * 0.1f;
+        }
     }
-    
 }
 
 // タッチイベントを取得した時の処理

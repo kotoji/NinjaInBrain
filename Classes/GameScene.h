@@ -13,6 +13,7 @@
 #include "Config.h"
 #include <list>
 
+class PlateSprite;
 
 class GameScene : public cocos2d::CCLayer {
 protected:
@@ -46,11 +47,11 @@ protected:
     void createBackground();
     void createPlayer();
     void createInitialPlates();
-    void respondCollision(kTag objTag);
+    void reactCollision(kTag objTag);
     kTag detectCollision() const;
     bool isIntersect(const cocos2d::CCPoint aLT, const cocos2d::CCPoint aRB,
                      const cocos2d::CCPoint bLT, const cocos2d::CCPoint bRB) const;
-    
+    PlateSprite* createPlate(const kTag plateTag);
     
 protected:
     cocos2d::CCSprite* mBackground;

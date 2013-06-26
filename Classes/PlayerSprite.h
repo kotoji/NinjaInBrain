@@ -16,7 +16,7 @@ public:
     enum PlayerState {
         StateJump,
         StateRun,
-        StateBump,  // おそらく要らない
+        StateFall,
     };
     
     PlayerSprite();

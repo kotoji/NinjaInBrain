@@ -51,6 +51,8 @@ bool GameScene::init() {
 
 // 更新処理
 void GameScene::update(float dt) {
+    PlayerSprite* player = static_cast<PlayerSprite*>(mBackground->getChildByTag(kTagPlayer));
+    
     // 消えたPlateのタグを消去する
     while (!mPlateTags.empty()) {
         if (!mBackground->getChildByTag(static_cast<int>(mPlateTags.front()))) {
@@ -63,11 +65,15 @@ void GameScene::update(float dt) {
     // 衝突応答
     kTag tag = detectCollision();
     if (tag != -1) {
-        respondCollision(tag);
+        reactCollision(tag);
+    } else {
+        if (player->getPlayerState() == PlayerSprite::StateRun) {
+            player->setPlayerState(PlayerSprite::StateFall);
+        }
     }
     
     // プレイヤーアップデート
-    mBackground->getChildByTag(kTagPlayer)->update(dt);
+    player->update(dt);
     
     // 各プレートアップデート
     for (auto plateTag : mPlateTags) {
@@ -121,7 +127,14 @@ void GameScene::createInitialPlates() {
     mPlateTags.push_back(static_cast<kTag>(tagPlate1));
     
     // 2つ目
-    
+    PlateSprite* plate2 = createPlate(static_cast<kTag>(tagPlate1));
+    // X座標を決める
+    float plate2X = plate1->getPosition().x + (plate1->getContentSize().width + plate2->getContentSize().width) / 2
+                    + random(5, 10) * 0.02f * bgSize.width;
+    plate2->setPosition(ccp(plate2X, plate2->getPosition().y));
+    int tagPlate2 = tagPlate1 + 1;
+    mBackground->addChild(plate2, kZOrderPlate, tagPlate2);
+    mPlateTags.push_back(static_cast<kTag>(tagPlate2));
 }
 
 // 衝突判定(プレイヤーと衝突している対象のタグを返す, 衝突していない場合は−1)
@@ -170,7 +183,7 @@ bool GameScene::isIntersect(const CCPoint aLT, const CCPoint aRB, const CCPoint 
 }
 
 // 衝突応答(衝突があった場合の処理)
-void GameScene::respondCollision(GameScene::kTag objTag) {
+void GameScene::reactCollision(GameScene::kTag objTag) {
     PlayerSprite* player = static_cast<PlayerSprite*>(mBackground->getChildByTag(kTagPlayer));
     CCSprite* obj = static_cast<CCSprite*>(mBackground->getChildByTag(objTag));
     
@@ -202,4 +215,45 @@ void GameScene::respondCollision(GameScene::kTag objTag) {
             player->setPosition(ccp(playerPos.x, playerPos.y - diff));
         }
     }
+}
+
+// 前にあるプレートの情報を元に新しいプレートをつくる
+PlateSprite* GameScene::createPlate(const kTag frontPlateTag) {
+    CCSize bgSize = mBackground->getContentSize();
+    PlateSprite* frontPlate = static_cast<PlateSprite*>(mBackground->getChildByTag(frontPlateTag));
+    
+    // プレートの種類をランダムで決定して作成する
+    PlateSprite::kPlate plateType = static_cast<PlateSprite::kPlate>(random(0, 100) % PlateSprite::kPlateCount);
+    PlateSprite* newPlate = PlateSprite::createWithType(plateType, bgSize);
+    
+    // Y座標の位置決め
+    float hightRatio = mBackground->getContentSize().height;
+    // Y座標があまり変わらない(25%)、ある程度変わる(50%)、大幅に変わる(25%)の3パターンで分ける
+    int rnd = random(0, 100);
+    if (rnd < 25) {
+        hightRatio *= 0.2f;
+    } else if (rnd < 80) {
+        hightRatio *= 0.5f;
+    } else {
+        hightRatio *= 0.35f;
+    }
+    // 範囲を定める
+    float rangeDown = frontPlate->getPosition().y - hightRatio / 2;
+    float rangeUp = frontPlate->getPosition().y + hightRatio / 2;
+    
+    // 画面外に出ないように調整
+    if (rangeDown < 0) {
+        rangeDown = 0;
+    }
+    if (rangeUp > bgSize.height * 0.9) {
+        rangeUp = bgSize.height * 0.9;
+    }
+    
+    // ランダムでY座標を確定
+    float newPlateY = static_cast<float>(random(static_cast<int>(rangeDown), static_cast<int>(rangeUp)));
+    
+    // 位置を確定する（X座標はとりあえずギリギリ画面外にでるように設定）
+    newPlate->setPosition(ccp(bgSize.width + newPlate->getContentSize().width / 2, newPlateY));
+    
+    return newPlate;
 }

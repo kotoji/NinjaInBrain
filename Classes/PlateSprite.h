@@ -18,6 +18,7 @@ public:
         kPlateLong,
         kPlateMid,
         kPlateShort,
+        kPlateCount,
     };
 
 protected:
