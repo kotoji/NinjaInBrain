@@ -66,10 +66,6 @@ void GameScene::update(float dt) {
     kTag tag = detectCollision();
     if (tag != -1) {
         reactCollision(tag);
-    } else {
-        if (player->getPlayerState() == PlayerSprite::StateRun) {
-            player->setPlayerState(PlayerSprite::StateFall);
-        }
     }
     
     // プレイヤーアップデート
@@ -143,7 +139,7 @@ GameScene::kTag GameScene::detectCollision() const {
     
     
     // プレイヤーの当たり判定矩形を計算
-    CCSprite* player = static_cast<CCSprite*>(mBackground->getChildByTag(kTagPlayer));
+    PlayerSprite* player = static_cast<PlayerSprite*>(mBackground->getChildByTag(kTagPlayer));
     CCPoint playerPos = player->getPosition();
     CCSize playerSize = player->getContentSize();
     // TODO COUTION : MagicNumber
@@ -168,6 +164,8 @@ GameScene::kTag GameScene::detectCollision() const {
             }
         }
     }
+    // ぶつからなかった
+    player->noIntersection();
     return static_cast<kTag>(-1);
 }
 
@@ -175,7 +173,6 @@ GameScene::kTag GameScene::detectCollision() const {
 bool GameScene::isIntersect(const CCPoint aLT, const CCPoint aRB, const CCPoint bLT, const CCPoint bRB) const {
     if ((aLT.x < bRB.x) && (aRB.x > bLT.x)) {
         if ((aLT.y > bRB.y) && (aRB.y < bLT.y)) {
-            CCLog("intersect");
             return true;
         }
     }
@@ -203,8 +200,8 @@ void GameScene::reactCollision(GameScene::kTag objTag) {
     // 衝突したオブジェクトがプレートだった場合
     if (objTag >= kTag::kTagBasePlate) {
         
-        // プレイヤーが落下中
-        if (!player->isJumpUp()) {
+        // プレイヤーが落下中もしくは走っている場合
+        if (!player->isJumpAndUp()) {
             float diff = objPointLT.y - playerPointRB.y;
             player->setPlayerStateRun();
             player->setPosition(ccp(playerPos.x, playerPos.y + diff));

@@ -29,13 +29,15 @@ public:
     
     CC_SYNTHESIZE(PlayerState, mState, PlayerState);
     void setPlayerStateRun();
-    bool isJumpUp() const;
+    bool isJumpAndUp() const;
+    void noIntersection();
     
 protected:
     cocos2d::CCSize mBackgroundSize;
     float gravity;
     bool jumping;
     float speedY;
+    int noIntersectCount;
 };
 
 #endif /* defined(__NinjaInBrain__Player__) */
