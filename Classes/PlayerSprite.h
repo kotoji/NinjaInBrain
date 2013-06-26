@@ -16,6 +16,7 @@ public:
     enum PlayerState {
         StateJump,
         StateRun,
+        StateBump,  // おそらく要らない
     };
     
     PlayerSprite();
@@ -27,6 +28,8 @@ public:
     void touched();
     
     CC_SYNTHESIZE(PlayerState, mState, PlayerState);
+    void setPlayerStateRun();
+    bool isJumpUp() const;
     
 protected:
     cocos2d::CCSize mBackgroundSize;

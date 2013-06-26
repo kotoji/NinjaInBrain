@@ -39,7 +39,7 @@ bool PlayerSprite::init(CCSize backgroundSize) {
     mBackgroundSize = backgroundSize;
     
     gravity = G * mBackgroundSize.height;
-    jumping = true;
+    mState = StateJump;
     speedY = -gravity;
     
     return true;
@@ -49,14 +49,32 @@ bool PlayerSprite::init(CCSize backgroundSize) {
 void PlayerSprite::update(float dt) {
     CCPoint pos = getPosition();
     // 重力で落下する
-    if (jumping) {
-        setPosition(ccp(pos.x, pos.y - speedY));
-        speedY += gravity;
+    if (mState == StateJump) {
+        setPosition(ccp(pos.x, pos.y + speedY));
+        speedY -= gravity;
+    } else if (mState == StateRun) {
+        speedY = 0;
     }
     
 }
 
 // タッチイベントを取得した時の処理
 void PlayerSprite::touched() {
-    
+    if (mState == StateRun) {
+        speedY = JUMP_SPEED_COEF * mBackgroundSize.height;
+        mState = StateJump;
+    }
+}
+
+// ジャンプ中でかつ上昇しているときtrue
+bool PlayerSprite::isJumpUp() const {
+    if (mState == StateJump && speedY > 0) {
+        return true;
+    }
+    return false;
+}
+
+// プレイヤーをRun状態にする
+void PlayerSprite::setPlayerStateRun() {
+    mState = StateRun;
 }

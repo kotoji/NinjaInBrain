@@ -60,6 +60,12 @@ void GameScene::update(float dt) {
         }
     }
     
+    // 衝突応答
+    kTag tag = detectCollision();
+    if (tag != -1) {
+        respondCollision(tag);
+    }
+    
     // プレイヤーアップデート
     mBackground->getChildByTag(kTagPlayer)->update(dt);
     
@@ -119,15 +125,17 @@ void GameScene::createInitialPlates() {
 }
 
 // 衝突判定(プレイヤーと衝突している対象のタグを返す, 衝突していない場合は−1)
-GameScene::kTag GameScene::detectIntersect() const {
+GameScene::kTag GameScene::detectCollision() const {
+    // CCRectを使って上手いこと実装できるようならそちらに切り替える
+    
     
     // プレイヤーの当たり判定矩形を計算
     CCSprite* player = static_cast<CCSprite*>(mBackground->getChildByTag(kTagPlayer));
     CCPoint playerPos = player->getPosition();
     CCSize playerSize = player->getContentSize();
     // TODO COUTION : MagicNumber
-    CCPoint playerPointLT = ccp(playerPos.x + playerSize.width * 0.9, playerPos.y + playerSize.height * 0.9);
-    CCPoint playerPointRB = ccp(playerPos.x - playerSize.width * 0.9, playerPos.y - playerSize.height * 0.9);
+    CCPoint playerPointLT = ccp(playerPos.x - playerSize.width * 0.45, playerPos.y + playerSize.height * 0.45);
+    CCPoint playerPointRB = ccp(playerPos.x + playerSize.width * 0.45, playerPos.y - playerSize.height * 0.45);
     
     // プレートとの衝突を判定
     for (auto plateTag : mPlateTags) {
@@ -139,10 +147,12 @@ GameScene::kTag GameScene::detectIntersect() const {
             // プレートの当たり判定矩形の計算
             CCPoint objPos = obj->getPosition();
             CCSize objSize = obj->getContentSize();
-            CCPoint objPointLT = ccp(objPos.x + objSize.width, objPos.y + objSize.height);
-            CCPoint objPointRB = ccp(objPos.x - objSize.width, objPos.y - objSize.height);
+            CCPoint objPointLT = ccp(objPos.x - objSize.width / 2, objPos.y + objSize.height / 2);
+            CCPoint objPointRB = ccp(objPos.x + objSize.width / 2, objPos.y - objSize.height / 2);
             
-            
+            if (isIntersect(playerPointLT, playerPointRB, objPointLT, objPointRB)) {
+                return plateTag;
+            }
         }
     }
     return static_cast<kTag>(-1);
@@ -150,5 +160,46 @@ GameScene::kTag GameScene::detectIntersect() const {
 
 // 衝突判定補助関数
 bool GameScene::isIntersect(const CCPoint aLT, const CCPoint aRB, const CCPoint bLT, const CCPoint bRB) const {
+    if ((aLT.x < bRB.x) && (aRB.x > bLT.x)) {
+        if ((aLT.y > bRB.y) && (aRB.y < bLT.y)) {
+            CCLog("intersect");
+            return true;
+        }
+    }
+    return false;
+}
+
+// 衝突応答(衝突があった場合の処理)
+void GameScene::respondCollision(GameScene::kTag objTag) {
+    PlayerSprite* player = static_cast<PlayerSprite*>(mBackground->getChildByTag(kTagPlayer));
+    CCSprite* obj = static_cast<CCSprite*>(mBackground->getChildByTag(objTag));
     
+    // プレイヤーの当たり判定矩形を計算
+    CCPoint playerPos = player->getPosition();
+    CCSize playerSize = player->getContentSize();
+    // TODO COUTION : MagicNumber
+    CCPoint playerPointLT = ccp(playerPos.x + playerSize.width * 0.45f, playerPos.y + playerSize.height * 0.45f);
+    CCPoint playerPointRB = ccp(playerPos.x - playerSize.width * 0.45f, playerPos.y - playerSize.height * 0.45f);
+    
+    // 衝突したオブジェクトの当たり判定矩形の計算
+    CCPoint objPos = obj->getPosition();
+    CCSize objSize = obj->getContentSize();
+    CCPoint objPointLT = ccp(objPos.x + objSize.width / 2, objPos.y + objSize.height / 2);
+    CCPoint objPointRB = ccp(objPos.x - objSize.width / 2, objPos.y - objSize.height / 2);
+    
+    // 衝突したオブジェクトがプレートだった場合
+    if (objTag >= kTag::kTagBasePlate) {
+        
+        // プレイヤーが落下中
+        if (!player->isJumpUp()) {
+            float diff = objPointLT.y - playerPointRB.y;
+            player->setPlayerStateRun();
+            player->setPosition(ccp(playerPos.x, playerPos.y + diff));
+            
+        } // プレーヤーが上昇中
+        else {
+            float diff = playerPointLT.y - objPointRB.y;
+            player->setPosition(ccp(playerPos.x, playerPos.y - diff));
+        }
+    }
 }

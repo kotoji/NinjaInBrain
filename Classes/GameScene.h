@@ -46,9 +46,11 @@ protected:
     void createBackground();
     void createPlayer();
     void createInitialPlates();
+    void respondCollision(kTag objTag);
+    kTag detectCollision() const;
     bool isIntersect(const cocos2d::CCPoint aLT, const cocos2d::CCPoint aRB,
                      const cocos2d::CCPoint bLT, const cocos2d::CCPoint bRB) const;
-    kTag detectIntersect() const;
+    
     
 protected:
     cocos2d::CCSprite* mBackground;

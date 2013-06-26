@@ -16,9 +16,11 @@
 #define PNG_PLATE_SHORT "plate_short.png"
 
 
+#define PI 3.1415926f
 #define INIT_POS_X 0.15
-#define PLATE_SPEED_COEF 0.005f
-#define G 0.01f
+#define PLATE_SPEED_COEF 0.01f
+#define G 0.005f
 #define MOVE_TIME_UNIT 1.0f / 30.0f
+#define JUMP_SPEED_COEF 0.065f
 
 #endif
