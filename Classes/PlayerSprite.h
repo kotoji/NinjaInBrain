@@ -30,6 +30,7 @@ public:
     CC_SYNTHESIZE(PlayerState, mState, PlayerState);
     void setPlayerStateRun();
     bool isJumpAndUp() const;
+    void setSpeedZero();
     void noIntersection();
     
 protected:

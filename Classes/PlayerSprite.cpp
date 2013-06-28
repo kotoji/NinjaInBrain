@@ -20,9 +20,9 @@ PlayerSprite::~PlayerSprite() {
     
 }
 
-PlayerSprite* PlayerSprite::create(CCSize backgraoundSize) {
+PlayerSprite* PlayerSprite::create(CCSize bgSize) {
     PlayerSprite* pRet = new PlayerSprite();
-    if (pRet && pRet->init(backgraoundSize)) {
+    if (pRet && pRet->init(bgSize)) {
         pRet->autorelease();
         return pRet;
     } else {
@@ -31,12 +31,12 @@ PlayerSprite* PlayerSprite::create(CCSize backgraoundSize) {
     }
 }
 
-bool PlayerSprite::init(CCSize backgroundSize) {
+bool PlayerSprite::init(CCSize bgSize) {
     if (!CCSprite::initWithFile(PNG_PLAYER)) {
         return false;
     }
     
-    mBackgroundSize = backgroundSize;
+    mBackgroundSize = bgSize;
     
     gravity = G * mBackgroundSize.height;
     mState = StateJump;
@@ -48,7 +48,6 @@ bool PlayerSprite::init(CCSize backgroundSize) {
 
 // 毎フレームごとの処理
 void PlayerSprite::update(float dt) {
-    CCLog("%d", static_cast<int>(mState));
     
     CCPoint pos = getPosition();
     // 重力で落下する
@@ -86,6 +85,11 @@ bool PlayerSprite::isJumpAndUp() const {
 // プレイヤーをRun状態にする
 void PlayerSprite::setPlayerStateRun() {
     mState = StateRun;
+}
+
+// プレイヤーのY方向速度をゼロにする
+void PlayerSprite::setSpeedZero() {
+    speedY = 0;
 }
 
 // 衝突判定で衝突していないとき毎回外部から呼ばれる

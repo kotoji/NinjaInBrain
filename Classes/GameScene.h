@@ -19,6 +19,7 @@ class GameScene : public cocos2d::CCLayer {
 protected:
     enum kTag {
         kTagBackground = 1,
+        kTagGameover,
         kTagPlayer,
         kTagBasePlate = 10000,
     };
@@ -27,6 +28,7 @@ protected:
         kZOrderBackground,
         kZOrderPlate,
         kZOrderCharacter,
+        kZOrderGameover,
     };
     
 public:
@@ -47,15 +49,18 @@ protected:
     void createBackground();
     void createPlayer();
     void createInitialPlates();
+    bool isGameOver();
     void reactCollision(kTag objTag);
     kTag detectCollision() const;
     bool isIntersect(const cocos2d::CCPoint aLT, const cocos2d::CCPoint aRB,
                      const cocos2d::CCPoint bLT, const cocos2d::CCPoint bRB) const;
     PlateSprite* createPlate(const kTag plateTag);
+    void showGameOver();
     
 protected:
     cocos2d::CCSprite* mBackground;
     std::list<kTag> mPlateTags;
+    bool mIsGameOver;
 };
 
 #endif /* defined(__NinjaInBrain__GameScene__) */

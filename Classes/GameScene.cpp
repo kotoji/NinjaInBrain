@@ -27,6 +27,9 @@ bool GameScene::init() {
         return false;
     }
     
+    // メンバ変数の初期化
+    mIsGameOver = false;
+    
     // 乱数の種まき
     srand(static_cast<unsigned>(time(nullptr)));
     
@@ -51,6 +54,11 @@ bool GameScene::init() {
 
 // 更新処理
 void GameScene::update(float dt) {
+    // すでにゲームオーバーなら処理を行わない
+    if (mIsGameOver) {
+        return;
+    }
+    
     PlayerSprite* player = static_cast<PlayerSprite*>(mBackground->getChildByTag(kTagPlayer));
     
     // 消えたPlateのタグを消去する
@@ -74,6 +82,13 @@ void GameScene::update(float dt) {
     // 各プレートアップデート
     for (auto plateTag : mPlateTags) {
         mBackground->getChildByTag(plateTag)->update(dt);
+    }
+    
+    // ゲームオーバー判定
+    if (isGameOver()) {
+        mIsGameOver = true;
+        // TODO : ゲームオーバーレイヤーをかぶせる
+        showGameOver();
     }
     
 }
@@ -111,6 +126,7 @@ void GameScene::createInitialPlates() {
     CCSize bgSize = mBackground->getContentSize();
     CCPoint playerPos = mBackground->getChildByTag(kTagPlayer)->getPosition();
     
+    
     // 1つ目、プレイヤーの下に作らないと死ぬ
     PlateSprite* plate1 = PlateSprite::createWithType(PlateSprite::kPlateLong, mBackground->getContentSize());
     int tagPlate1 = static_cast<int>(kTagBasePlate);
@@ -122,6 +138,7 @@ void GameScene::createInitialPlates() {
     mBackground->addChild(plate1, kZOrderPlate, tagPlate1);
     mPlateTags.push_back(static_cast<kTag>(tagPlate1));
     
+    
     // 2つ目
     PlateSprite* plate2 = createPlate(static_cast<kTag>(tagPlate1));
     // X座標を決める
@@ -131,6 +148,17 @@ void GameScene::createInitialPlates() {
     int tagPlate2 = tagPlate1 + 1;
     mBackground->addChild(plate2, kZOrderPlate, tagPlate2);
     mPlateTags.push_back(static_cast<kTag>(tagPlate2));
+}
+
+// ゲームオーバー判定
+bool GameScene::isGameOver() {
+    CCSprite* player = static_cast<CCSprite*>(mBackground->getChildByTag(kTagPlayer));
+    
+    if (player->getPosition().y + player->getContentSize().height < 0) {
+        return true;
+    }
+    
+    return false;
 }
 
 // 衝突判定(プレイヤーと衝突している対象のタグを返す, 衝突していない場合は−1)
@@ -210,6 +238,7 @@ void GameScene::reactCollision(GameScene::kTag objTag) {
         else {
             float diff = playerPointLT.y - objPointRB.y;
             player->setPosition(ccp(playerPos.x, playerPos.y - diff));
+            player->setSpeedZero();
         }
     }
 }
@@ -253,4 +282,10 @@ PlateSprite* GameScene::createPlate(const kTag frontPlateTag) {
     newPlate->setPosition(ccp(bgSize.width + newPlate->getContentSize().width / 2, newPlateY));
     
     return newPlate;
+}
+
+
+// ゲームオーバー画面を被せる
+void GameScene::showGameOver() {
+    
 }

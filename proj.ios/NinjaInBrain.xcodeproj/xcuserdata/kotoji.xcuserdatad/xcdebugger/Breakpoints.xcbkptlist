@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393951354.671441"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
+         startingLineNumber = "132"
+         endingLineNumber = "132"
          landmarkName = "GameScene::createInitialPlates()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393951354.671441"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
+         startingLineNumber = "132"
+         endingLineNumber = "132"
          landmarkName = "GameScene::createInitialPlates()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -45,22 +45,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393951354.671441"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85">
+         startingLineNumber = "100"
+         endingLineNumber = "100">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393953662.609893"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "180"
-         endingLineNumber = "180"
+         startingLineNumber = "208"
+         endingLineNumber = "208"
          landmarkName = "GameScene::isIntersect(const CCPoint aLT, const CCPoint aRB, const CCPoint bLT, const CCPoint bRB)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -69,11 +69,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393953662.609893"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "202"
-         endingLineNumber = "202"
+         startingLineNumber = "230"
+         endingLineNumber = "230"
          landmarkName = "GameScene::reactCollision(GameScene::kTag objTag)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -82,11 +82,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393953662.609893"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "186"
-         endingLineNumber = "186"
+         startingLineNumber = "214"
+         endingLineNumber = "214"
          landmarkName = "GameScene::reactCollision(GameScene::kTag objTag)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -95,11 +95,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393951354.671441"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "139"
-         endingLineNumber = "139"
+         startingLineNumber = "167"
+         endingLineNumber = "167"
          landmarkName = "GameScene::detectCollision()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -108,11 +108,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393953662.609893"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "176"
-         endingLineNumber = "176"
+         startingLineNumber = "204"
+         endingLineNumber = "204"
          landmarkName = "GameScene::isIntersect(const CCPoint aLT, const CCPoint aRB, const CCPoint bLT, const CCPoint bRB)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -121,11 +121,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393953662.609893"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "179"
-         endingLineNumber = "179"
+         startingLineNumber = "207"
+         endingLineNumber = "207"
          landmarkName = "GameScene::isIntersect(const CCPoint aLT, const CCPoint aRB, const CCPoint bLT, const CCPoint bRB)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -134,11 +134,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/GameScene.cpp"
-         timestampString = "393953662.609893"
+         timestampString = "394098623.812619"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "174"
-         endingLineNumber = "174"
+         startingLineNumber = "202"
+         endingLineNumber = "202"
          landmarkName = "GameScene::isIntersect(const CCPoint aLT, const CCPoint aRB, const CCPoint bLT, const CCPoint bRB)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -147,12 +147,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/PlayerSprite.cpp"
-         timestampString = "393953662.609893"
+         timestampString = "393954091.671232"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "73"
-         endingLineNumber = "73"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
          landmarkName = "PlayerSprite::touched()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../Classes/StartScene.cpp"
+         timestampString = "394078484.756952"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "22"
+         endingLineNumber = "22"
+         landmarkName = "StartScene::init()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../Classes/StartScene.cpp"
+         timestampString = "394097911.723236"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "28"
+         endingLineNumber = "28"
+         landmarkName = "StartScene::init()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../Classes/AppDelegate.cpp"
+         timestampString = "394078716.889493"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "28"
+         endingLineNumber = "28"
+         landmarkName = "AppDelegate::applicationDidFinishLaunching()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
