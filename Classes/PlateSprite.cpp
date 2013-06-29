@@ -37,10 +37,6 @@ bool PlateSprite::initWithType(kPlate plateType, CCSize backgroundSize) {
     mPlateType = plateType;
     mBackgroundSize = backgroundSize;
     
-    // 移動するアクションを追加
-    float speedX = PLATE_SPEED_COEF * backgroundSize.width;
-    runAction(CCRepeatForever::create(CCMoveBy::create(MOVE_TIME_UNIT, ccp(-speedX, 0))));
-    
     return true;
 }
 
@@ -62,7 +58,11 @@ const char* PlateSprite::getImageFileName(kPlate plateType) const {
 void PlateSprite::update(float dt) {
     CCPoint pos = getPosition();
     
-    // 画面外に出たら死ぬ
+    // 移動する
+    float speedX = PLATE_SPEED_COEF * mBackgroundSize.width;
+    this->setPosition(ccp(pos.x - speedX, pos.y));
+    
+    // 画面外に出たら消滅
     if (pos.x <(-getContentSize().width + 50)) {
         this->removeFromParentAndCleanup(true);
     }

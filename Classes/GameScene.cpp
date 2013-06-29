@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "PlayerSprite.h"
 #include "PlateSprite.h"
+#include "GameOverSprite.h"
 #include "Config.h"
 #include <list>
 
@@ -84,10 +85,13 @@ void GameScene::update(float dt) {
         mBackground->getChildByTag(plateTag)->update(dt);
     }
     
+    // プレートの自動生成
+    autoCreatePlate();
+    
     // ゲームオーバー判定
     if (isGameOver()) {
         mIsGameOver = true;
-        // TODO : ゲームオーバーレイヤーをかぶせる
+        // ゲームオーバー画面をかぶせる
         showGameOver();
     }
     
@@ -148,6 +152,21 @@ void GameScene::createInitialPlates() {
     int tagPlate2 = tagPlate1 + 1;
     mBackground->addChild(plate2, kZOrderPlate, tagPlate2);
     mPlateTags.push_back(static_cast<kTag>(tagPlate2));
+    
+    // 3つ目
+    PlateSprite* plate3 = createPlate(static_cast<kTag>(tagPlate2));
+    // X座標を決める
+    float plate3X = plate2->getPosition().x + (plate2->getContentSize().width + plate3->getContentSize().width) / 2
+                    + random(5, 10) * 0.02f * bgSize.width;
+    plate3->setPosition(ccp(plate3X, plate3->getPosition().y));
+    int tagPlate3 = tagPlate2 + 1;
+    mBackground->addChild(plate3, kZOrderPlate, tagPlate3);
+    mPlateTags.push_back(static_cast<kTag>(tagPlate3));
+}
+
+// プレートの自動生成
+void GameScene::autoCreatePlate() {
+    // TODO
 }
 
 // ゲームオーバー判定
@@ -171,8 +190,8 @@ GameScene::kTag GameScene::detectCollision() const {
     CCPoint playerPos = player->getPosition();
     CCSize playerSize = player->getContentSize();
     // TODO COUTION : MagicNumber
-    CCPoint playerPointLT = ccp(playerPos.x - playerSize.width * 0.45, playerPos.y + playerSize.height * 0.45);
-    CCPoint playerPointRB = ccp(playerPos.x + playerSize.width * 0.45, playerPos.y - playerSize.height * 0.45);
+    CCPoint playerPointLT = ccp(playerPos.x - playerSize.width * 0.4, playerPos.y + playerSize.height * 0.4);
+    CCPoint playerPointRB = ccp(playerPos.x + playerSize.width * 0.4, playerPos.y - playerSize.height * 0.4);
     
     // プレートとの衝突を判定
     for (auto plateTag : mPlateTags) {
@@ -287,5 +306,9 @@ PlateSprite* GameScene::createPlate(const kTag frontPlateTag) {
 
 // ゲームオーバー画面を被せる
 void GameScene::showGameOver() {
+    CCSize bgSize = mBackground->getContentSize();
     
+    GameOverSprite* sprite = GameOverSprite::create(bgSize);
+    sprite->setPosition(ccp(bgSize.width / 2, bgSize.height / 2));
+    mBackground->addChild(sprite, kZOrderGameover, kTagGameover);
 }

@@ -7,6 +7,8 @@
 //
 
 #include "GameOverSprite.h"
+#include "GameScene.h"
+#include "StartScene.h"
 
 using namespace cocos2d;
 
@@ -46,5 +48,29 @@ bool GameOverSprite::init(CCSize bgSize) {
 
 // メニューをつくる（Restart, GoToTitle）
 void GameOverSprite::createMenu() {
+    CCSize bgSize = mBackgroundSize;
     
+    // リトライボタン作成
+    CCMenuItemImage* retryButton = CCMenuItemImage::create(PNG_RETRY_BTN, PNG_RETRY_BTN, this, menu_selector(GameOverSprite::menuRetryCallback));
+    retryButton->setPosition(ccp(bgSize.width / 2, bgSize.height * 0.35));
+    
+    // タイトルに戻るボタン作成
+    CCMenuItemImage* titleButton = CCMenuItemImage::create(PNG_TITLE_BTN, PNG_TITLE_BTN, this, menu_selector(GameOverSprite::menuTitleCallback));
+    titleButton->setPosition(ccp(bgSize.width / 2, bgSize.height * 0.20));
+    
+    // メニュー作成
+    CCMenu* menu = CCMenu::create(retryButton, titleButton, NULL);
+    menu->setPosition(CCPointZero);
+    this->addChild(menu);
 }
+
+void GameOverSprite::menuRetryCallback(CCObject* pSender) {
+    GameScene* scene = GameScene::create();
+    CCDirector::sharedDirector()->replaceScene((CCScene*)scene);
+}
+
+void GameOverSprite::menuTitleCallback(CCObject* pSender) {
+    StartScene* scene = StartScene::create();
+    CCDirector::sharedDirector()->replaceScene((CCScene*)scene);
+}
+

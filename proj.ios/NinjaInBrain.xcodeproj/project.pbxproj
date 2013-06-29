@@ -21,6 +21,9 @@
 		00056C54177D28CA0074C219 /* start_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 00056C51177D28CA0074C219 /* start_bg.png */; };
 		00056C55177D28CA0074C219 /* start_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 00056C52177D28CA0074C219 /* start_btn.png */; };
 		00056C58177D77A60074C219 /* GameOverSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00056C56177D77A60074C219 /* GameOverSprite.cpp */; };
+		00056C5A177F27830074C219 /* gameover_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 00056C59177F27830074C219 /* gameover_bg.png */; };
+		00056C5D177F2E450074C219 /* retry_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 00056C5B177F2E450074C219 /* retry_btn.png */; };
+		00056C5E177F2E450074C219 /* title_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 00056C5C177F2E450074C219 /* title_btn.png */; };
 		15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */; };
 		15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88D1682F7D5002FB0C5 /* b2CollideCircle.cpp */; };
 		15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88E1682F7D5002FB0C5 /* b2CollideEdge.cpp */; };
@@ -271,6 +274,9 @@
 		00056C52177D28CA0074C219 /* start_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start_btn.png; sourceTree = "<group>"; };
 		00056C56177D77A60074C219 /* GameOverSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameOverSprite.cpp; path = ../Classes/GameOverSprite.cpp; sourceTree = "<group>"; };
 		00056C57177D77A60074C219 /* GameOverSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverSprite.h; path = ../Classes/GameOverSprite.h; sourceTree = "<group>"; };
+		00056C59177F27830074C219 /* gameover_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameover_bg.png; sourceTree = "<group>"; };
+		00056C5B177F2E450074C219 /* retry_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retry_btn.png; sourceTree = "<group>"; };
+		00056C5C177F2E450074C219 /* title_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_btn.png; sourceTree = "<group>"; };
 		15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3D8891682F7D5002FB0C5 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -1524,6 +1530,9 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				00056C5B177F2E450074C219 /* retry_btn.png */,
+				00056C5C177F2E450074C219 /* title_btn.png */,
+				00056C59177F27830074C219 /* gameover_bg.png */,
 				00056C50177D28CA0074C219 /* gameover_layer.png */,
 				00056C51177D28CA0074C219 /* start_bg.png */,
 				00056C52177D28CA0074C219 /* start_btn.png */,
@@ -1641,6 +1650,9 @@
 				00056C53177D28CA0074C219 /* gameover_layer.png in Resources */,
 				00056C54177D28CA0074C219 /* start_bg.png in Resources */,
 				00056C55177D28CA0074C219 /* start_btn.png in Resources */,
+				00056C5A177F27830074C219 /* gameover_bg.png in Resources */,
+				00056C5D177F2E450074C219 /* retry_btn.png in Resources */,
+				00056C5E177F2E450074C219 /* title_btn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

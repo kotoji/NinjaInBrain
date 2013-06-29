@@ -11,18 +11,22 @@
 
 #include "cocos2d.h"
 
-#define PNG_GAMEOVER "gameover.png"
+#define PNG_GAMEOVER "gameover_bg.png"
+#define PNG_RETRY_BTN "retry_btn.png"
+#define PNG_TITLE_BTN "title_btn.png"
 
-class GameOverSprite : cocos2d::CCSprite {
+class GameOverSprite : public cocos2d::CCSprite {
 public:
     GameOverSprite();
     virtual ~GameOverSprite();
     
-    bool init(cocos2d::CCSize bgSize);
-    GameOverSprite* create(cocos2d::CCSize bgSize);
+    virtual bool init(cocos2d::CCSize bgSize);
+    static GameOverSprite* create(cocos2d::CCSize bgSize);
     
 protected:
     void createMenu();
+    void menuRetryCallback(cocos2d::CCObject* pSender);
+    void menuTitleCallback(cocos2d::CCObject* pSender);
     
 private:
     cocos2d::CCSize mBackgroundSize;

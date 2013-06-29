@@ -46,7 +46,7 @@ void StartScene::showStartButton() {
     
     // スタートボタン作成
     CCMenuItemImage* startButton = CCMenuItemImage::create(PNG_START_BTN, PNG_START_BTN, this, menu_selector(StartScene::menuStartCallback));
-    startButton->setPosition(ccp(bgSize.width * 0.78, bgSize.height * 0.1));
+    startButton->setPosition(ccp(bgSize.width / 2, bgSize.height * 0.25));
     
     // メニュー作成
     CCMenu* menu = CCMenu::create(startButton, NULL);

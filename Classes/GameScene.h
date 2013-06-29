@@ -49,6 +49,7 @@ protected:
     void createBackground();
     void createPlayer();
     void createInitialPlates();
+    void autoCreatePlate();
     bool isGameOver();
     void reactCollision(kTag objTag);
     kTag detectCollision() const;
