@@ -29,7 +29,7 @@ public:
     
     CC_SYNTHESIZE(PlayerState, mState, PlayerState);
     void setPlayerStateRun();
-    bool isJumpAndUp() const;
+    bool isUp() const;
     void setSpeedZero();
     void noIntersection();
     
@@ -38,7 +38,7 @@ protected:
     float gravity;
     bool jumping;
     float speedY;
-    int noIntersectCount;
+    PlayerState mOldState;
 };
 
 #endif /* defined(__NinjaInBrain__Player__) */

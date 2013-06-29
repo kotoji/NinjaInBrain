@@ -101,6 +101,7 @@ bool GameScene::ccTouchBegan(CCTouch* touchs , CCEvent* event) {
     return true;
 }
 
+// タップされた時
 void GameScene::ccTouchEnded(CCTouch* touches, CCEvent* event) {
     static_cast<PlayerSprite*>(mBackground->getChildByTag(kTagPlayer))->touched();
 }
@@ -166,7 +167,32 @@ void GameScene::createInitialPlates() {
 
 // プレートの自動生成
 void GameScene::autoCreatePlate() {
-    // TODO
+    // 最後尾のプレートが画面に半分以上表示されたら新しいプレートを生成する
+    kTag lastPlateTag = mPlateTags.back();
+    PlateSprite* lastPlate = static_cast<PlateSprite*>(mBackground->getChildByTag(lastPlateTag));
+    
+    CCSize bgSize = mBackground->getContentSize();
+    CCPoint lastPlatePos = lastPlate->getPosition();
+    
+    if (lastPlatePos.x > bgSize.width) {
+        // まだ生成しなくてよいのでリターン
+        return;
+    }
+    
+    // 新しいプレートを生成、登録する
+    PlateSprite* newPlate = createPlate(lastPlateTag);
+    // X座標を決める
+    float newPlateX = lastPlatePos.x + (newPlate->getContentSize().width + newPlate->getContentSize().width) / 2
+                    + random(5, 10) * 0.025f * bgSize.width;
+    newPlate->setPosition(ccp(newPlateX, newPlate->getPosition().y));
+    // タグを決める、古くなったタグが使い回せるならそれを使う
+    int newPlateTag = kTagBasePlate;
+    if (!(lastPlateTag > kTagBasePlate + 10)) {
+        newPlateTag = lastPlateTag + 1;
+    }
+    // 登録
+    mBackground->addChild(newPlate, kZOrderPlate, newPlateTag);
+    mPlateTags.push_back(static_cast<kTag>(newPlateTag));
 }
 
 // ゲームオーバー判定
@@ -190,8 +216,8 @@ GameScene::kTag GameScene::detectCollision() const {
     CCPoint playerPos = player->getPosition();
     CCSize playerSize = player->getContentSize();
     // TODO COUTION : MagicNumber
-    CCPoint playerPointLT = ccp(playerPos.x - playerSize.width * 0.4, playerPos.y + playerSize.height * 0.4);
-    CCPoint playerPointRB = ccp(playerPos.x + playerSize.width * 0.4, playerPos.y - playerSize.height * 0.4);
+    CCPoint playerPointLT = ccp(playerPos.x - playerSize.width * 0.5, playerPos.y + playerSize.height * 0.5);
+    CCPoint playerPointRB = ccp(playerPos.x + playerSize.width * 0.45, playerPos.y - playerSize.height * 0.45);
     
     // プレートとの衝突を判定
     for (auto plateTag : mPlateTags) {
@@ -235,8 +261,8 @@ void GameScene::reactCollision(GameScene::kTag objTag) {
     CCPoint playerPos = player->getPosition();
     CCSize playerSize = player->getContentSize();
     // TODO COUTION : MagicNumber
-    CCPoint playerPointLT = ccp(playerPos.x + playerSize.width * 0.45f, playerPos.y + playerSize.height * 0.45f);
-    CCPoint playerPointRB = ccp(playerPos.x - playerSize.width * 0.45f, playerPos.y - playerSize.height * 0.45f);
+    CCPoint playerPointLT = ccp(playerPos.x + playerSize.width * 0.4f, playerPos.y + playerSize.height * 0.45f);
+    CCPoint playerPointRB = ccp(playerPos.x - playerSize.width * 0.4f, playerPos.y - playerSize.height * 0.45f);
     
     // 衝突したオブジェクトの当たり判定矩形の計算
     CCPoint objPos = obj->getPosition();
@@ -247,8 +273,9 @@ void GameScene::reactCollision(GameScene::kTag objTag) {
     // 衝突したオブジェクトがプレートだった場合
     if (objTag >= kTag::kTagBasePlate) {
         
-        // プレイヤーが落下中もしくは走っている場合
-        if (!player->isJumpAndUp()) {
+        
+        // プレイヤーが(速度的な意味で)落下中の場合
+        if (!player->isUp()) {
             float diff = objPointLT.y - playerPointRB.y;
             player->setPlayerStateRun();
             player->setPosition(ccp(playerPos.x, playerPos.y + diff));
@@ -262,6 +289,7 @@ void GameScene::reactCollision(GameScene::kTag objTag) {
     }
 }
 
+// プレート生成補助メソッド
 // 前にあるプレートの情報を元に新しいプレートをつくる
 PlateSprite* GameScene::createPlate(const kTag frontPlateTag) {
     CCSize bgSize = mBackground->getContentSize();
@@ -287,11 +315,11 @@ PlateSprite* GameScene::createPlate(const kTag frontPlateTag) {
     float rangeUp = frontPlate->getPosition().y + hightRatio / 2;
     
     // 画面外に出ないように調整
-    if (rangeDown < 0) {
-        rangeDown = 0;
+    if (rangeDown < bgSize.height * 0.05) {
+        rangeDown = bgSize.height * 0.05;
     }
-    if (rangeUp > bgSize.height * 0.9) {
-        rangeUp = bgSize.height * 0.9;
+    if (rangeUp > bgSize.height * 0.8) {
+        rangeUp = bgSize.height * 0.8;
     }
     
     // ランダムでY座標を確定

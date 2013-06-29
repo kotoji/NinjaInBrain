@@ -40,23 +40,22 @@ bool PlayerSprite::init(CCSize bgSize) {
     
     gravity = G * mBackgroundSize.height;
     mState = StateJump;
+    mOldState = mState;
     speedY = -gravity;
-    noIntersectCount = 0;
     
     return true;
 }
 
 // 毎フレームごとの処理
 void PlayerSprite::update(float dt) {
-    
+    CCLog("%d", mState);
     CCPoint pos = getPosition();
     // 重力で落下する
     if (mState == StateJump) {
         setPosition(ccp(pos.x, pos.y + speedY));
         speedY -= gravity;
-        noIntersectCount = 0;
     } else if (mState == StateRun) {
-        speedY = gravity * 0.15f; // ちょっとだけ落とす
+        speedY = -gravity * 0.5f; // ちょっとだけ落とす
         setPosition(ccp(pos.x, pos.y + speedY));
         
     } else if (mState == StateFall) {
@@ -64,19 +63,23 @@ void PlayerSprite::update(float dt) {
         speedY -= gravity;
     }
     
+    mOldState = mState;
 }
 
 // タッチイベントを取得した時の処理
 void PlayerSprite::touched() {
-    if (mState == StateRun || mState == StateFall) {
+    if (mState == StateRun) {
+        CCPoint pos = getPosition();
+        
         speedY = JUMP_SPEED_COEF * mBackgroundSize.height;
+        setPosition(ccp(pos.x, pos.y + speedY / 2));
         mState = StateJump;
     }
 }
 
-// ジャンプ中でかつ上昇しているときtrue
-bool PlayerSprite::isJumpAndUp() const {
-    if (mState == StateJump && speedY > 0) {
+// 上昇しているときtrue
+bool PlayerSprite::isUp() const {
+    if (speedY > 0 && mOldState != StateRun) {
         return true;
     }
     return false;
@@ -93,16 +96,15 @@ void PlayerSprite::setSpeedZero() {
 }
 
 // 衝突判定で衝突していないとき毎回外部から呼ばれる
-// Run状態でずっと衝突を起こさない場合Fallに状態遷移する
+// Run状態で衝突を起こさない場合Fallに状態遷移する
 void PlayerSprite::noIntersection() {
     // ジャンプ中は無視
     if (mState == StateJump) {
-        noIntersectCount = 0;
         return;
     }
     
-    if (noIntersectCount > 5) {
+    if (mState == StateRun) {
+        mOldState = StateRun;
         mState = StateFall;
     }
-    noIntersectCount++;
 }
