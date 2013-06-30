@@ -13,6 +13,7 @@
 
 #define PNG_START_BG "start_bg.png"
 #define PNG_START_BTN "start_btn.png"
+#define PNG_QUIT_BTN "quit_btn.png"
 
 class StartScene : public cocos2d::CCLayer {
 public:
@@ -24,6 +25,7 @@ protected:
     void showBackground();
     void showStartButton();
     void menuStartCallback(CCObject* pSender);
+    void menuQuitCallback(CCObject* pSender);
 
 protected:
     cocos2d::CCSprite* mBackground;
