@@ -19,6 +19,8 @@ class GameScene : public cocos2d::CCLayer {
 protected:
     enum kTag {
         kTagBackground = 1,
+        kTagScoreLabel,
+        kTagHighScoreLabel,
         kTagGameover,
         kTagPlayer,
         kTagBasePlate = 10000,
@@ -28,6 +30,7 @@ protected:
         kZOrderBackground,
         kZOrderPlate,
         kZOrderCharacter,
+        kZOrderScoreLabel,
         kZOrderGameover,
     };
     
@@ -57,11 +60,17 @@ protected:
                      const cocos2d::CCPoint bLT, const cocos2d::CCPoint bRB) const;
     PlateSprite* createPlate(const kTag plateTag);
     void showGameOver();
+    void showScoreLabel();
+    void showHighScoreLabel();
+    void saveHighScore();
+    void scoreUp();
     
 protected:
     cocos2d::CCSprite* mBackground;
     std::list<kTag> mPlateTags;
     bool mIsGameOver;
+    int mScore;
+    int mPlateCount;
 };
 
 #endif /* defined(__NinjaInBrain__GameScene__) */

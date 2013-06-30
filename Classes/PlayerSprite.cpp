@@ -48,7 +48,7 @@ bool PlayerSprite::init(CCSize bgSize) {
 
 // 毎フレームごとの処理
 void PlayerSprite::update(float dt) {
-    CCLog("%d", mState);
+
     CCPoint pos = getPosition();
     // 重力で落下する
     if (mState == StateJump) {

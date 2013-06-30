@@ -30,6 +30,8 @@ bool GameScene::init() {
     
     // メンバ変数の初期化
     mIsGameOver = false;
+    mScore = 0;
+    mPlateCount = 0;
     
     // 乱数の種まき
     srand(static_cast<unsigned>(time(nullptr)));
@@ -46,6 +48,10 @@ bool GameScene::init() {
     
     // 最初の地形を生成
     createInitialPlates();
+    
+    // スコアを表示する(プレート生成のタイミングでスコアアップする)
+    showScoreLabel();
+    showHighScoreLabel();
     
     // フレーム毎の処理を開始する
     scheduleUpdate();
@@ -85,8 +91,11 @@ void GameScene::update(float dt) {
         mBackground->getChildByTag(plateTag)->update(dt);
     }
     
-    // プレートの自動生成
+    // プレートの自動生成(プレート生成時にスコアが上がる)
     autoCreatePlate();
+    
+    // スコア表示
+    showScoreLabel();
     
     // ゲームオーバー判定
     if (isGameOver()) {
@@ -193,6 +202,9 @@ void GameScene::autoCreatePlate() {
     // 登録
     mBackground->addChild(newPlate, kZOrderPlate, newPlateTag);
     mPlateTags.push_back(static_cast<kTag>(newPlateTag));
+    
+    // スコアを上げる
+    scoreUp();
 }
 
 // ゲームオーバー判定
@@ -336,7 +348,69 @@ PlateSprite* GameScene::createPlate(const kTag frontPlateTag) {
 void GameScene::showGameOver() {
     CCSize bgSize = mBackground->getContentSize();
     
+    // ハイスコアを更新・表示
+    saveHighScore();
+    
     GameOverSprite* sprite = GameOverSprite::create(bgSize);
     sprite->setPosition(ccp(bgSize.width / 2, bgSize.height / 2));
     mBackground->addChild(sprite, kZOrderGameover, kTagGameover);
+}
+
+// スコアを表示する
+void GameScene::showScoreLabel() {
+    CCSize bgSize = mBackground->getContentSize();
+    
+    const char* scoreStr = ccsf("  Score     : %d", mScore);
+        // スコアラベルが存在しているか試す
+    CCLabelTTF* scoreLabel = static_cast<CCLabelTTF*>(mBackground->getChildByTag(kTagScoreLabel));
+    if (!scoreLabel) {
+        // スコア生成
+        CCLabelTTF* scoreLabel = CCLabelTTF::create(scoreStr, "Arial", 30);
+        scoreLabel->setPosition(ccp(bgSize.width * 0.83, bgSize.height * 0.89));
+        mBackground->addChild(scoreLabel, kZOrderScoreLabel, kTagScoreLabel);
+    } else {
+        scoreLabel->setString(scoreStr);
+    }
+    
+}
+
+// ハイスコアラベル表示
+void GameScene::showHighScoreLabel() {
+    CCSize bgSize = mBackground->getContentSize();
+    
+    // ハイスコア表示
+    // 取得できないときはゼロ
+    int highScore = CCUserDefault::sharedUserDefault()->getIntegerForKey(KEY_HIGHSCORE, 0);
+    const char* highScoreStr = ccsf("High Score : %d", highScore);
+    CCLabelTTF* highScoreLabel = static_cast<CCLabelTTF*>(mBackground->getChildByTag(kTagHighScoreLabel));
+    if (!highScoreLabel) {
+        // ハイスコア生成
+        highScoreLabel = CCLabelTTF::create(highScoreStr, "Arial", 30);
+        highScoreLabel->setPosition(ccp(bgSize.width * 0.82, bgSize.height * 0.95));
+        mBackground->addChild(highScoreLabel, kZOrderScoreLabel, kTagHighScoreLabel);
+    } else {
+        highScoreLabel->setString(highScoreStr);
+    }
+}
+
+// ハイスコア記録･表示
+void GameScene::saveHighScore() {
+    CCUserDefault* userDefault = CCUserDefault::sharedUserDefault();
+    
+    // ハイスコアを取得する
+    int oldHighScore = userDefault->getIntegerForKey(KEY_HIGHSCORE, 0);
+    if (oldHighScore < mScore) {
+        // ハイスコアを保持する
+        userDefault->setIntegerForKey(KEY_HIGHSCORE, mScore);
+        userDefault->flush();
+        
+        // ハイスコアを表示する
+        showHighScoreLabel();
+    }
+}
+
+// スコアアップ
+void GameScene::scoreUp() {
+    ++mPlateCount;
+    mScore += BASE_SCORE * mPlateCount / 2;
 }

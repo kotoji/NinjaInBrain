@@ -7,8 +7,8 @@ AppDelegate::AppDelegate() {
 
 }
 
-AppDelegate::~AppDelegate() 
-{
+AppDelegate::~AppDelegate() {
+    
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
@@ -20,8 +20,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     pEGLView->setDesignResolutionSize(RES_SIZE_WIDTH, RES_SIZE_HEIGHT, kResolutionShowAll);
 	
-    // turn on display FPS
-    pDirector->setDisplayStats(true);
+    // FPSを表示しない
+    pDirector->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 30);
